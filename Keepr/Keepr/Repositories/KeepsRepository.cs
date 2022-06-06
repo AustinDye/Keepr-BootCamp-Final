@@ -33,30 +33,30 @@ namespace Keepr.Repositories
   {
    string sql = @"
   SELECT 
-            a.*,
-            k.*
+            k.*,
+            a.*
         FROM keeps k
         JOIN accounts a ON k.creatorId = a.id";
-   return _db.Query<Account, Keep, Keep>(sql, (a, k) =>
+   return _db.Query<Keep, Account,Keep>(sql, (k, a) =>
    {
     k.Creator = a;
     return k;
-   }).ToList();
+   },splitOn: "id").ToList();
   }
 
   internal Keep Get(int id)
   {
    string sql = @"
     SELECT
-    k.*
-    act.*
-    FROM keep k
-    JOIN accounts act ON k.creatorId = act.id
+    k.*,
+    a.*
+    FROM keeps k
+    JOIN accounts a ON k.creatorId = a.id
     WHERE k.id = @id
     ";
-    return _db.Query<Account, Keep ,Keep>(sql, (act, k) => 
+    return _db.Query<Keep, Account, Keep>(sql, (k, a) => 
     {
-     k.Creator = act;
+     k.Creator = a;
      return k;
     }, new { id }).FirstOrDefault();
   }
@@ -64,10 +64,10 @@ namespace Keepr.Repositories
   internal Keep Edit(Keep original)
   {
    string sql = @"
-   UPDATE keep
+   UPDATE keeps
    SET
     name = @Name,
-    description = @Description
+    description = @Description,
     img = @Img
     WHERE id = @Id
    ";
@@ -76,7 +76,7 @@ namespace Keepr.Repositories
   }
   internal void Delete(int id)
   {
-   string sql = "DELETE FROM keep WHERE id = @id LIMIT 1";
+   string sql = "DELETE FROM keeps WHERE id = @id LIMIT 1";
       _db.Execute(sql, new { id });
   }
 

@@ -61,6 +61,8 @@ namespace Keepr.Services
    {
     throw new Exception("You can not delete keeps you did not make");
    }
+   _repo.Delete(keep.Id);
+   
   }
  }
 }

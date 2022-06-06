@@ -96,7 +96,7 @@ public KeepsController(KeepsService keepsServ)
    {
     Account account = await HttpContext.GetUserInfoAsync<Account>();
     _keepsServ.Delete(id, account.Id);
-    return Ok();
+    return Ok(id);
    }
    catch (Exception e)
    {
