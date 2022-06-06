@@ -16,7 +16,7 @@ namespace Keepr.Services
 
   internal List<Keep> Get()
   {
-   List<Keep> keeps =_repo.Get();
+   List<Keep> keeps = _repo.Get();
    return keeps;
   }
 
@@ -30,10 +30,20 @@ namespace Keepr.Services
    return found;
   }
 
+  internal List<Keep> GetKeepsByVault(int id)
+  {
+   List<Keep> keeps = _repo.GetKeepsByVault(id);
+     if(keeps == null)
+   {
+    throw new Exception("Nothin here but us chickens");
+   }
+   return keeps;
+  }
+
    internal Keep Create(Keep keep)
     {
-     Keep newKeep = _repo.Create(keep);
-   return newKeep;
+    Keep newKeep = _repo.Create(keep);
+    return newKeep;
   }
 
     internal Keep Edit(Keep keepData)
@@ -41,7 +51,7 @@ namespace Keepr.Services
       Keep original = GetById(keepData.Id);
       if (original.CreatorId != keepData.CreatorId)
       {
-        throw new Exception("You cant do that!");
+        throw new Exception("You cant do that");
       }
       original.Name = keepData.Name ?? original.Name;
       original.Description = keepData.Description ?? original.Description;

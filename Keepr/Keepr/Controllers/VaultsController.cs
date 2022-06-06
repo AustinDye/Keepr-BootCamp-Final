@@ -16,11 +16,11 @@ namespace Keepr.Controllers
 public class VaultsController : ControllerBase
 {
 
- private readonly VaultsService _vaultServ;
+ private readonly VaultsService _vaultsServ;
 
-public VaultsController(VaultsService vaultServ)
+public VaultsController(VaultsService vaultsServ)
   {
-    _vaultServ = vaultServ;
+    _vaultsServ = vaultsServ;
   }
 
   [HttpPost]
@@ -31,7 +31,7 @@ public VaultsController(VaultsService vaultServ)
    {
     Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
     vaultData.CreatorId = userInfo.Id;
-    Vault newVault = _vaultServ.Create(vaultData);
+    Vault newVault = _vaultsServ.Create(vaultData);
     newVault.Creator = userInfo;
     return Created($"/api/vaults/{newVault.Id}", newVault);
    }
@@ -47,7 +47,7 @@ public VaultsController(VaultsService vaultServ)
   {
    try
    {
-    List<Vault> vault = _vaultServ.Get();
+    List<Vault> vault = _vaultsServ.Get();
     return Ok(vault);
    }
    catch (Exception e)
@@ -56,20 +56,20 @@ public VaultsController(VaultsService vaultServ)
    }
   }
 
- /* [HttpGet("{id}")]
+  [HttpGet("{id}")]
  public async Task<ActionResult<Vault>> Get(int id)
   {
    try
    {
     Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
-    Vault vault = _vaultServ.Get(id);
+    Vault vault = _vaultsServ.GetById(id);
     return Ok(vault);
    }
    catch (Exception e)
    {
     return BadRequest(e.Message);
    }
-  }*/
+  }
 
   [HttpPut("{id}")]
   [Authorize]
@@ -80,7 +80,7 @@ public VaultsController(VaultsService vaultServ)
     Account account = await HttpContext.GetUserInfoAsync<Account>();
     vault.CreatorId = account.Id;
     vault.Id = id;
-    Vault updatedVault = _vaultServ.Edit(vault);
+    Vault updatedVault = _vaultsServ.Edit(vault);
     return Ok(updatedVault);
    }
    catch(Exception e)
@@ -95,8 +95,8 @@ public VaultsController(VaultsService vaultServ)
    try
    {
     Account account = await HttpContext.GetUserInfoAsync<Account>();
-    _vaultServ.Delete(id, account.Id);
-    return Ok();
+    _vaultsServ.Delete(id, account.Id);
+    return Ok(id);
    }
    catch (Exception e)
    {

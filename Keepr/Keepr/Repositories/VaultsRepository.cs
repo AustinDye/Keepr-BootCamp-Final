@@ -21,10 +21,11 @@ namespace Keepr.Repositories
     INSERT INTO vaults
     (name, description, isPrivate, creatorId)
     VALUES
-     (@Name, @Description, @IsPrivate, @CreatorId)
+     (@Name, @Description, @IsPrivate, @CreatorId);
     SELECT LAST_INSERT_ID();
     ";
-   _db.Execute(sql, newVault);
+   int id = _db.ExecuteScalar<int>(sql, newVault);
+   newVault.Id = id;
    return newVault;
   } 
 
@@ -32,43 +33,43 @@ namespace Keepr.Repositories
   {
    string sql = @"
     SELECT
-    v.*
-    act.*
-    FROM vault v
-    JOIN accounts act ON v.creatorId = act.id
+    v.*,
+    a.*
+    FROM vaults v
+    JOIN accounts a ON v.creatorId = a.id
    ";
-   return _db.Query<Vault, Account, Vault>(sql, (vault, account) =>
+   return _db.Query<Vault, Account, Vault>(sql, (v, a) =>
    {
-    vault.Creator = account;
-    return vault;
-   }).ToList();
+    v.Creator = a;
+    return v;
+   },splitOn: "id").ToList();
   }
 
   internal Vault Get(int id)
   {
    string sql = @"
     SELECT
-    v.*
-    act.*
-    FROM vault v
-    JOIN accounts act ON v.creatorId = act.id
+    v.*,
+    a.*
+    FROM vaults v
+    JOIN accounts a ON v.creatorId = a.id
     WHERE v.id = @id
     ";
-    return _db.Query<Vault, Account, Vault>(sql, (vault, account) => 
+    return _db.Query<Vault, Account, Vault>(sql, (v, a) => 
     {
-     vault.Creator = account;
-     return vault;
+     v.Creator = a;
+     return v;
     }, new { id }).FirstOrDefault();
   }
 
   internal Vault Edit(Vault original)
   {
    string sql = @"
-   UPDATE vault
+   UPDATE vaults
    SET
     name = @Name,
-    description = @Description
-    img = @Img
+    description = @Description,
+    isPrivate = @IsPrivate
     WHERE id = @Id
    ";
    _db.Execute(sql, original);
@@ -76,7 +77,7 @@ namespace Keepr.Repositories
   }
   internal void Delete(int id)
   {
-   string sql = "DELETE FROM vault WHERE id = @id LIMIT 1";
+   string sql = "DELETE FROM vaults WHERE id = @id LIMIT 1";
       _db.Execute(sql, new { id });
   }
 

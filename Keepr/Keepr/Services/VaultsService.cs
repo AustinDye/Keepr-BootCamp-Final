@@ -16,10 +16,11 @@ namespace Keepr.Services
 
   internal List<Vault> Get()
   {
-   return _repo.Get();
+    List<Vault> vaults = _repo.Get();
+   return vaults;
   }
 
-  private Vault Get(int id)
+  internal Vault GetById(int id)
   {
    Vault found = _repo.Get(id);
    if(found == null)
@@ -31,15 +32,16 @@ namespace Keepr.Services
 
    internal Vault Create(Vault vaultData)
     {
-      return _repo.Create(vaultData);
+      Vault newVault = _repo.Create(vaultData);
+      return newVault;
     }
 
     internal Vault Edit(Vault vaultData)
     {
-      Vault original = Get(vaultData.Id);
+      Vault original = GetById(vaultData.Id);
       if (original.CreatorId != vaultData.CreatorId)
       {
-        throw new Exception("You cant do that!");
+        throw new Exception("You cant do that");
       }
       original.Name = vaultData.Name ?? original.Name;
       original.Description = vaultData.Description ?? original.Description;
@@ -48,16 +50,17 @@ namespace Keepr.Services
 
    _repo.Edit(original);
 
-   return Get(original.Id);
+   return GetById(original.Id);
   }
 
   internal void Delete(int id, string userId)
   {
-   Vault vault = Get(id);
+   Vault vault = GetById(id);
    if(vault.CreatorId != userId)
    {
     throw new Exception("You can not delete vaults you did not make");
    }
+   _repo.Delete(vault.Id);
   }
  }
 }

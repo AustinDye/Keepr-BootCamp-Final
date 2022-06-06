@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Keepr.Models;
 using Keepr.Services;
 using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CodeWorks.Auth0Provider;
+
+
 
 
 namespace Keepr.Controllers
@@ -16,10 +19,12 @@ public class VaultKeepsController : ControllerBase
 {
 
  private readonly VaultKeepsService _vaultKeepsServ;
+  private readonly KeepsService _keepsServ;
 
-public VaultKeepsController(VaultKeepsService vaultKeepsServ)
+  public VaultKeepsController(VaultKeepsService vaultKeepsServ, KeepsService keepsServ)
   {
     _vaultKeepsServ = vaultKeepsServ;
+   _keepsServ = keepsServ;
   }
 
   [HttpPost]
@@ -39,6 +44,22 @@ public VaultKeepsController(VaultKeepsService vaultKeepsServ)
    }
 
   }
+
+  [HttpGet("{id}")]
+ public async Task<ActionResult<VaultKeep>> Get(int id)
+  {
+   try
+   {
+    Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+    List<Keep> vaultKeeps = _keepsServ.GetKeepsByVault(id);
+    return Ok(vaultKeeps);
+   }
+   catch (Exception e)
+   {
+    return BadRequest(e.Message);
+   }
+  }
+
 
  
 }
