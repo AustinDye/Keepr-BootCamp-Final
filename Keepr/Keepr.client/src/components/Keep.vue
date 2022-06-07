@@ -1,10 +1,10 @@
 <template>
   <div>
-    <figure class="selectable" @click="getKeep()">
+    <figure class="">
       <img class="" :src="keep.img" alt="" />
       <figcaption class="">
         <h1 class="text-light">{{ keep.name }}</h1>
-        <a
+        <a @click="gotToProfile"
           ><img class="user-img rounded-circle" :src="keep.creator.picture"
         /></a>
       </figcaption>
@@ -18,6 +18,8 @@ import { AppState } from "../AppState";
 import { keepsService } from "../services/KeepsService";
 import { Modal } from "bootstrap";
 import Pop from "../utils/Pop";
+import { router } from "../router";
+import { useRouter } from "vue-router";
 export default {
   props: {
     keep: {
@@ -25,6 +27,7 @@ export default {
     },
   },
   setup(props) {
+    const router = useRouter();
     return {
       keeps: computed(() => AppState.keeps),
       focusKeep: computed(() => AppState.focusKeep),
@@ -39,6 +42,10 @@ export default {
         } catch {
           Pop.toast("You cant view that keep!");
         }
+      },
+      async gotToProfile() {
+        console.log(props.keep);
+        router.push({ name: "Profile", params: { id: props.keep.creatorId } });
       },
     };
   },

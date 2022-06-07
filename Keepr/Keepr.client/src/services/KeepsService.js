@@ -27,6 +27,11 @@ class KeepsService {
  async delete(keep) {
   const res = await api.delete("/api/keeps/" + keep.id)
  }
+
+ async getByProfile(id) {
+  const res = await api.get("/api/profiles/" + id + "/keeps")
+  AppState.vaults = res.data
+ }
 }
 
 export const keepsService = new KeepsService() 
