@@ -63,7 +63,7 @@ namespace Keepr.Repositories
     }, new { id }).FirstOrDefault();
   }
 
-  internal List<Keep> GetByCreator(int creatorId)
+  internal List<Keep> GetByCreator(string creatorId)
   {
    string sql = @"
     SELECT
@@ -71,14 +71,15 @@ namespace Keepr.Repositories
     a.*
     FROM keeps k
     JOIN accounts a ON k.creatorId = a.id
-    WHERE k.id = @creatorId
+    WHERE k.creatorId = @creatorId
     ";
    return _db.Query<Keep, Account,Keep>(sql, (k, a) =>
    {
     k.Creator = a;
-    return k;
-   },new { creatorId }).ToList();
+    return k; 
+   },new { creatorId }).ToList<Keep>();
   }
+
 
   internal Keep Edit(Keep original)
   {

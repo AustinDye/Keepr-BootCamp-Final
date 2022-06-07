@@ -37,7 +37,7 @@ namespace Keepr.Controllers
     }
 
     [HttpGet("{id}/vaults")]
-    public ActionResult<List<Vault>> GetVaults(int id)
+    public ActionResult<List<Vault>> GetVaults(string id)
     {
       try
       {
@@ -51,7 +51,7 @@ namespace Keepr.Controllers
     }
 
     [HttpGet("{id}/keeps")]
-    public ActionResult<List<Keep>> GetKeeps(int id)
+    public ActionResult<List<Keep>> GetKeeps(string id)
     {
       try
       {

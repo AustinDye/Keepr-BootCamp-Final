@@ -30,10 +30,10 @@ namespace Keepr.Services
    return found;
   }
 
-  internal List<Keep> GetProfileKeeps(int id)
+  internal List<Keep> GetProfileKeeps(string id)
     {
-      List<Keep> profileVaults =  _repo.GetByCreator(id);
-      return profileVaults;
+      List<Keep> profileKeeps =  _repo.GetByCreator(id);
+      return profileKeeps;
     }
 
    internal Keep Create(Keep keep)

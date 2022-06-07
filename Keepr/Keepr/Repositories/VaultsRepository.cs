@@ -97,15 +97,15 @@ namespace Keepr.Repositories
    string sql = "DELETE FROM vaults WHERE id = @id LIMIT 1";
       _db.Execute(sql, new { id });
   }
-    internal List<Vault> GetByCreator(int creatorId)
+    internal List<Vault> GetByCreator(string creatorId)
   {
    string sql = @"
     SELECT
     v.*,
     a.*
-    FROM keeps v
+    FROM vaults v
     JOIN accounts a ON v.creatorId = a.id
-    WHERE v.id = @creatorId
+    WHERE v.creatorId = @creatorId
     ";
    return _db.Query<Vault, Account,Vault>(sql, (v, a) =>
    {

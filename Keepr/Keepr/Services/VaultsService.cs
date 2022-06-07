@@ -70,7 +70,7 @@ namespace Keepr.Services
    return myVaults;
   }
 
-    internal List<Vault> GetProfileVaults(int id)
+    internal List<Vault> GetProfileVaults(string id)
   {
      List<Vault> profileVaults =  _repo.GetByCreator(id);
    return profileVaults;
