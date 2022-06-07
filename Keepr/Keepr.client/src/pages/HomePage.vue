@@ -1,5 +1,8 @@
 <template>
-  <Keep v-for="k in keeps.slice(0, 20)" :key="k.id" :keep="k" />
+  <div class="keep-container">
+    <Keep v-for="k in keeps.slice(0, 20)" :key="k.id" :keep="k" />
+  </div>
+  <KeepModal />
 </template>
 
 <script>
@@ -7,6 +10,7 @@ import { computed, onMounted } from "@vue/runtime-core";
 import { keepsService } from "../services/KeepsService";
 import { AppState } from "../AppState";
 import Pop from "../utils/Pop";
+import { Modal } from "bootstrap";
 export default {
   name: "Home",
   setup() {
@@ -19,13 +23,6 @@ export default {
     });
     return {
       keeps: computed(() => AppState.keeps),
-      async create() {
-        try {
-          await keepsService.create();
-        } catch (error) {
-          Pop.toast("Something went wrong", error);
-        }
-      },
     };
   },
 };

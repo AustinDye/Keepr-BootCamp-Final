@@ -13,42 +13,56 @@ a {
   text-decoration: none;
 }
 
-main {
+.keep-container {
   display: block;
   columns: 18rem;
   gap: 2rem;
+  margin: 0;
 }
 figure {
-  break-inside: avoid;
-  transition-duration: 500ms;
+  margin: 1em;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  transition-duration: 1000ms;
+  background-color: transparent;
+  border-radius: 1rem;
+  animation: 3s ease-out 0s 1 slideInFromTop;
+  box-shadow: 0.5em 0.5em 0.5em rgba(0, 0, 0, 0.345);
+  border-radius: 1rem;
+}
+
+figure > img {
+  grid-row: 1 / -1;
+  grid-column: 1;
+  border-radius: 1rem;
+  width: 100%;
+  display: block;
+}
+
+figcaption {
+  grid-row: 2;
+  grid-column: 1;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 0.2em 0.5em;
+  justify-self: start;
+  background-color: rgba(0, 0, 0, 0.188);
 }
 
 * {
   box-sizing: border-box;
 }
-body {
-  font-family: avenir, roboto, helvetica, sans-serif;
-  margin: 2rem calc(2vw + 2rem);
-}
+
 main {
-  margin: 2rem 0;
-}
-img {
-  width: 100%;
-  display: block;
-  border-radius: 1rem 1rem 1rem 1rem;
+  margin: 1rem;
 }
 
 @keyframes slideInFromTop {
   0% {
     transform: translateY(-100%);
+    opacity: 0;
   }
   100% {
     transform: translateY(0);
+    opacity: 100;
   }
-}
-
-figure {
-  animation: 3s ease-out 0s 1 slideInFromTop;
-  box-shadow: 0.5em 0.5em 0.5em rgba(0, 0, 0, 0.345);
 }
