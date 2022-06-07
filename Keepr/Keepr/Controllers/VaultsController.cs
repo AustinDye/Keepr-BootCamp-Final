@@ -108,13 +108,14 @@ public VaultsController(VaultsService vaultsServ, VaultKeepsService vaultKeepSer
    }
   }
 
-  [HttpGet("{id}/keeps")]
-  public ActionResult<List<Keep>> GetVaultKeeps(int vaultId)
+  [HttpGet("{vaultId}/keeps")]
+  public ActionResult<List<VaultKeepViewModel>> GetVaultKeeps(int vaultId)
   {
    try
    {
-    List<Keep> keeps = _vaultKeepsServ.GetKeeps(vaultId);
-    return keeps;
+    Console.WriteLine(vaultId.ToString());
+    List<VaultKeepViewModel> keeps = _vaultKeepsServ.GetKeeps(vaultId);
+    return Ok(keeps);
    } 
    catch (Exception e) 
    {

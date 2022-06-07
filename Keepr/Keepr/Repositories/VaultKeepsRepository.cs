@@ -5,7 +5,8 @@ using System.Linq;
 using Dapper;
 
 
- public class VaultKeepsRepository
+
+public class VaultKeepsRepository
  {
   private readonly IDbConnection _db;
 
@@ -28,17 +29,26 @@ using Dapper;
    return newVaultKeep;
   }
 
-    internal List<Keep> GetKeepsByVault(int vaultId)
+    internal List<VaultKeepViewModel> GetKeepsByVault(int vaultId)
   {
    string sql = @"
     SELECT
       k.*,
-      vk.id AS vaultKeepId
+      vk.id AS vaultKeepId,
+      a.*
       FROM vaultKeeps vk
       JOIN keeps k ON vk.keepId = k.id
+      JOIN accounts a ON k.creatorId = a.id
       WHERE vk.vaultId = @vaultId
     ";
-   return _db.Query<Keep>(sql, new { vaultId }).ToList();
+    
+    
+   return _db.Query<VaultKeepViewModel,Account, VaultKeepViewModel >(sql, (vkkvm, a)=> 
+   {
+    vkkvm.Creator = a;
+    
+    return vkkvm;
+   },new { vaultId }, splitOn:"id").ToList<VaultKeepViewModel>();
   }
 
   internal VaultKeep GetVaultKeepById(string id)

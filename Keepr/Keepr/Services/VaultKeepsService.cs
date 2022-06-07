@@ -19,10 +19,13 @@ namespace Keepr.Services
      return newVaultKeep;
     }
 
-    internal List<Keep> GetKeeps(int vaultId)
+    internal List<VaultKeepViewModel> GetKeeps(int vaultId)
     {
-     List<Keep> keeps = _repo.GetKeepsByVault(vaultId);
+       
+     List<VaultKeepViewModel> keeps = _repo.GetKeepsByVault(vaultId);
+         Console.WriteLine("Dingus", vaultId.ToString());
      return keeps;
+     
     }
 
      internal void Delete(string id, string userId)
