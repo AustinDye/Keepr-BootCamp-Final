@@ -19,8 +19,11 @@ public class VaultsController : ControllerBase
  private readonly VaultsService _vaultsServ;
   private readonly VaultKeepsService _vaultKeepsServ;
 
-public VaultsController(VaultsService vaultsServ, VaultKeepsService vaultKeepServ)
+  private readonly AccountService _accountService;
+
+public VaultsController(VaultsService vaultsServ, VaultKeepsService vaultKeepServ, AccountService accountService)
   {
+     _accountService = accountService;
     _vaultsServ = vaultsServ;
    _vaultKeepsServ = vaultKeepServ;
   }
@@ -65,6 +68,10 @@ public VaultsController(VaultsService vaultsServ, VaultKeepsService vaultKeepSer
    {
     Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
     Vault vault = _vaultsServ.GetById(id);
+    if(vault.IsPrivate == true && userInfo.Id != vault.CreatorId)
+    {
+     return Forbid();
+    }
     return Ok(vault);
    }
    catch (Exception e)
@@ -109,11 +116,17 @@ public VaultsController(VaultsService vaultsServ, VaultKeepsService vaultKeepSer
   }
 
   [HttpGet("{vaultId}/keeps")]
-  public ActionResult<List<VaultKeepViewModel>> GetVaultKeeps(int vaultId)
+  public async Task<ActionResult<List<VaultKeepViewModel>>> GetVaultKeeps(int vaultId)
   {
    try
    {
     Console.WriteLine(vaultId.ToString());
+    Vault vault = _vaultsServ.GetById(vaultId);
+    Account account = await HttpContext.GetUserInfoAsync<Account>();
+    if(vault.IsPrivate && vault.CreatorId != account.Id)
+    {
+     return Forbid();
+    }
     List<VaultKeepViewModel> keeps = _vaultKeepsServ.GetKeeps(vaultId);
     return Ok(keeps);
    } 

@@ -17,12 +17,14 @@ public class VaultKeepsController : ControllerBase
 {
 
  private readonly VaultKeepsService _vaultKeepsServ;
+  private readonly VaultsService _vaultsServ;
   private readonly KeepsService _keepsServ;
 
-  public VaultKeepsController(VaultKeepsService vaultKeepsServ, KeepsService keepsServ)
+  public VaultKeepsController(VaultKeepsService vaultKeepsServ, KeepsService keepsServ, VaultsService vaultsServ)
   {
     _vaultKeepsServ = vaultKeepsServ;
    _keepsServ = keepsServ;
+     _vaultsServ = vaultsServ;
   }
 
   [HttpPost]
@@ -32,6 +34,11 @@ public class VaultKeepsController : ControllerBase
    try
    {
     Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+    Vault vault = _vaultsServ.GetById(vaultKeepData.VaultId);
+    if(vault.CreatorId != userInfo.Id)
+    {
+     return Forbid();
+    }
     vaultKeepData.CreatorId = userInfo.Id;
     VaultKeep newVaultKeep = _vaultKeepsServ.Create(vaultKeepData);
     return Created($"/api/vaultKeeps/{newVaultKeep.Id}", newVaultKeep);
