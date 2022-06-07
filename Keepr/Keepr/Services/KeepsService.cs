@@ -30,21 +30,17 @@ namespace Keepr.Services
    return found;
   }
 
-  internal List<Keep> GetKeepsByVault(int id)
-  {
-   List<Keep> keeps = _repo.GetKeepsByVault(id);
-     if(keeps == null)
-   {
-    throw new Exception("Nothin here but us chickens");
-   }
-   return keeps;
-  }
+  internal List<Keep> GetProfileKeeps(int id)
+    {
+      List<Keep> profileVaults =  _repo.GetByCreator(id);
+      return profileVaults;
+    }
 
    internal Keep Create(Keep keep)
     {
     Keep newKeep = _repo.Create(keep);
     return newKeep;
-  }
+    }
 
     internal Keep Edit(Keep keepData)
     {
@@ -66,8 +62,8 @@ namespace Keepr.Services
 
   internal void Delete(int id, string userId)
   {
-   Keep keep = GetById(id);
-   if(keep.CreatorId != userId)
+    Keep keep = GetById(id);
+    if(keep.CreatorId != userId)
    {
     throw new Exception("You can not delete keeps you did not make");
    }

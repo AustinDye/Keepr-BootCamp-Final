@@ -1,8 +1,10 @@
 using System.Data;
 using Keepr.Models;
+using System.Collections.Generic;
+using System.Linq;
 using Dapper;
-namespace Keepr.Repositories
-{
+
+
  public class VaultKeepsRepository
  {
   private readonly IDbConnection _db;
@@ -25,5 +27,33 @@ namespace Keepr.Repositories
    newVaultKeep.Id = id;
    return newVaultKeep;
   }
+
+    internal List<Keep> GetKeepsByVault(int vaultId)
+  {
+   string sql = @"
+    SELECT
+      k.*,
+      vk.id AS vaultKeepId
+      FROM vaultKeeps vk
+      JOIN keeps k ON vk.keepId = k.id
+      WHERE vk.vaultId = @vaultId
+    ";
+   return _db.Query<Keep>(sql, new { vaultId }).ToList();
+  }
+
+  internal VaultKeep GetVaultKeepById(string id)
+        {
+            string sql = "SELECT * FROM vaultKeeps WHERE id = @id";
+            return _db.QueryFirstOrDefault<VaultKeep>(sql, new { id });
+        }
+
+   internal void Delete(int id)
+  {
+   string sql = "DELETE FROM vaultKeeps WHERE id = @id LIMIT 1";
+      _db.Execute(sql, new { id });
+  }
+
+
+ 
  }
-}
+

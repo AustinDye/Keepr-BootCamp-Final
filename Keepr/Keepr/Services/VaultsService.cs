@@ -23,10 +23,11 @@ namespace Keepr.Services
   internal Vault GetById(int id)
   {
    Vault found = _repo.Get(id);
-   if(found == null)
+   if (found == null)
    {
     throw new Exception("Could not find that vault");
    }
+
    return found;
   }
 
@@ -61,6 +62,18 @@ namespace Keepr.Services
     throw new Exception("You can not delete vaults you did not make");
    }
    _repo.Delete(vault.Id);
+  }
+
+    internal List<Vault> GetAccountVaults(string id)
+  {
+     List<Vault> myVaults =  _repo.GetMy(id);
+   return myVaults;
+  }
+
+    internal List<Vault> GetProfileVaults(int id)
+  {
+     List<Vault> profileVaults =  _repo.GetByCreator(id);
+   return profileVaults;
   }
  }
 }

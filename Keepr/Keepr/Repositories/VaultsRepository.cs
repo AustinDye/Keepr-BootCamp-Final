@@ -51,7 +51,7 @@ namespace Keepr.Repositories
     SELECT
     v.*,
     a.*
-    FROM vaults v
+    FROM vaults v 
     JOIN accounts a ON v.creatorId = a.id
     WHERE v.id = @id
     ";
@@ -60,6 +60,23 @@ namespace Keepr.Repositories
      v.Creator = a;
      return v;
     }, new { id }).FirstOrDefault();
+  }
+
+  internal List<Vault> GetMy(string id)
+  {
+   string sql = @"
+        SELECT 
+        v.*,
+        a.*
+        FROM vaults v
+        JOIN accounts a ON v.creatorId = a.id
+        WHERE v.creatorId = @id
+        ";
+   return _db.Query<Vault, Account,Vault>(sql, (v, a) =>
+   {
+    v.Creator = a;
+    return v;
+   },new { id }).ToList();
   }
 
   internal Vault Edit(Vault original)
@@ -80,6 +97,22 @@ namespace Keepr.Repositories
    string sql = "DELETE FROM vaults WHERE id = @id LIMIT 1";
       _db.Execute(sql, new { id });
   }
-
+    internal List<Vault> GetByCreator(int creatorId)
+  {
+   string sql = @"
+    SELECT
+    v.*,
+    a.*
+    FROM keeps v
+    JOIN accounts a ON v.creatorId = a.id
+    WHERE v.id = @creatorId
+    ";
+   return _db.Query<Vault, Account,Vault>(sql, (v, a) =>
+   {
+    v.Creator = a;
+    return v;
+   },new { creatorId }).ToList();
+  }
  }
+
 }

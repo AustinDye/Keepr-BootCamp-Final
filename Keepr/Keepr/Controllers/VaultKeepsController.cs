@@ -3,10 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Keepr.Models;
 using Keepr.Services;
 using Microsoft.AspNetCore.Authorization;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using CodeWorks.Auth0Provider;
-
 
 
 
@@ -36,8 +34,9 @@ public class VaultKeepsController : ControllerBase
     Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
     vaultKeepData.CreatorId = userInfo.Id;
     VaultKeep newVaultKeep = _vaultKeepsServ.Create(vaultKeepData);
-    return Created($"/api/vaultkeeps/{newVaultKeep.Id}", newVaultKeep);
+    return Created($"/api/vaultKeeps/{newVaultKeep.Id}", newVaultKeep);
    }
+
    catch (Exception e)
    {
     return BadRequest(e.Message);
@@ -45,20 +44,25 @@ public class VaultKeepsController : ControllerBase
 
   }
 
-  [HttpGet("{id}")]
- public async Task<ActionResult<VaultKeep>> Get(int id)
+  [HttpDelete("{id}")]
+  [Authorize]
+  public async Task<ActionResult<VaultKeep>> Delete(string id)
   {
    try
    {
-    Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
-    List<Keep> vaultKeeps = _keepsServ.GetKeepsByVault(id);
-    return Ok(vaultKeeps);
+    Account account = await HttpContext.GetUserInfoAsync<Account>();
+    _vaultKeepsServ.Delete(id, account.Id);
+    return Ok(id);
    }
    catch (Exception e)
    {
     return BadRequest(e.Message);
    }
   }
+
+  
+
+
 
 
  

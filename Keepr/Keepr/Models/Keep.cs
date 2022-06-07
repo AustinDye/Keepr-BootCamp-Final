@@ -16,4 +16,9 @@ namespace Keepr.Models
    public DateTime CreatedAt { get; set; }
    public DateTime UpdatedAt { get; set; }
  }
+
+ public class VaultKeepKeepViewModel : Keep
+ {
+   public int VaultKeepId { get; set; }
+ }
 }

@@ -36,6 +36,17 @@ namespace Keepr.Repositories
             return newAccount;
         }
 
+        internal Profile Create(Profile newProfile)
+        {
+   string sql = @"
+            INSERT INTO accounts
+              (name, picture, id)
+            VALUES
+              (@Name, @Picture,@Id)";
+   _db.Execute(sql, newProfile);
+   return newProfile;
+  }
+        
         internal Account Edit(Account update)
         {
             string sql = @"
@@ -48,4 +59,5 @@ namespace Keepr.Repositories
             return update;
         }
     }
+    
 }
