@@ -18,7 +18,7 @@
           <p>{{ focusKeep.description }}</p>
           <div class="line"></div>
           <span class="d-flex">
-            <div class="btn btn-info">Add To Vault</div>
+            <div class="btn btn-info" @click="createVault()">Add To Vault</div>
           </span>
         </div>
       </div>

@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS vaults(
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
   name varchar(255) COMMENT 'User Name',
   description varchar(255) COMMENT 'Description',
+  img VARCHAR(255) COMMENT 'imgUrl',
   IsPrivate TINYINT DEFAULT 0,
 
   FOREIGN KEY (creatorId)

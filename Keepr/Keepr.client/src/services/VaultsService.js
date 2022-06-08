@@ -4,24 +4,25 @@ import { logger } from "../utils/Logger"
 import { api } from "./AxiosService"
 
 class VaultsService {
- async create(newVault) {
-  const res = await api.put("/api/vaults", newVault)
-  AppState.vaults.unshift(new Vaults(res.data))
+ async createVault(newVault) {
+  const res = await api.post("api/vaults", newVault)
+  AppState.vaults.unshift(new Vault(res.data))
   return new Vault(res.data)
  }
 
  async getAll() {
-  const res = await api.get("/api/vaults")
+  const res = await api.get("api/vaults")
   AppState.vaults = res.data
  }
 
  async getById(vault) {
-  const res = await api.get("/api/vaults" + keep.id)
+  const res = await api.get("api/vaults/" + vault.id)
   AppState.focusVault = res.data
  }
 
  async getByProfile(creatorId) {
-  const res = await api.get("/api/profiles/" + creatorId + "/vaults")
+  const res = await api.get("api/profiles/" + creatorId + "/vaults")
+  logger.log(res.data)
   AppState.vaults = res.data
  }
 

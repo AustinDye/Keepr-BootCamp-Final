@@ -21,7 +21,6 @@ a {
 }
 figure {
   margin: 1em;
-  display: grid;
   grid-template-rows: 1fr auto;
   transition-duration: 1000ms;
   background-color: transparent;
@@ -32,20 +31,17 @@ figure {
 }
 
 figure > img {
-  grid-row: 1 / -1;
-  grid-column: 1;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   width: 100%;
   display: block;
 }
 
 figcaption {
-  grid-row: 2;
-  grid-column: 1;
   background-color: rgba(255, 255, 255, 0.5);
   padding: 0.2em 0.5em;
   justify-self: start;
   background-color: rgba(0, 0, 0, 0.188);
+  border-radius: 1rem;
 }
 
 * {

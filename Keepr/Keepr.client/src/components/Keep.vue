@@ -1,10 +1,10 @@
 <template>
   <div>
     <figure class="">
-      <img class="" :src="keep.img" alt="" />
+      <img class="" :src="keep.img" alt="" @click="getKeep" />
       <figcaption class="">
         <h1 class="text-light">{{ keep.name }}</h1>
-        <a @click="gotToProfile"
+        <a @click="goToProfile"
           ><img class="user-img rounded-circle" :src="keep.creator.picture"
         /></a>
       </figcaption>
@@ -43,7 +43,7 @@ export default {
           Pop.toast("You cant view that keep!");
         }
       },
-      async gotToProfile() {
+      async goToProfile() {
         console.log(props.keep);
         router.push({ name: "Profile", params: { id: props.keep.creatorId } });
       },

@@ -4,5 +4,6 @@ export class Vault{
   this.name = data.name
   this.description = data.description
   this.creatorId = data.creatorId
+  this.img = data.img
  }
 }
