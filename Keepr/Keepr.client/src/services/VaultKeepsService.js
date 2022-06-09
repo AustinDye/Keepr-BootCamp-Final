@@ -21,8 +21,9 @@ class VaultKeepsService {
   logger.log(AppState.focusKeep)
  }
 
- async delete(keep) {
-  const res = await api.delete("/api/vaultkeeps/" + keep.id)
+  async delete(keep) {
+   debugger
+  const res = await api.delete("/api/vaultkeeps/" + keep.vaultKeepId)
  }
 
  async getByProfile(id) {

@@ -49,6 +49,9 @@ namespace Keepr.Repositories
   internal Keep Get(int id)
   {
    string sql = @"
+    UPDATE keeps
+      SET
+      views = @Views
     SELECT
     k.*,
     a.*

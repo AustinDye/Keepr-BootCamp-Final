@@ -1,9 +1,16 @@
 <template>
-  <div class="m-2 vbox">
-    <img class="vault-box rounded" :src="vault.img" alt="" @click="goToVault" />
-    <span>
-      <h5 class="text-light vault-text">{{ vault.name }}</h5>
-    </span>
+  <div class="col-md-3">
+    <div class="vbox">
+      <img
+        class="vault-box rounded"
+        :src="vault.img"
+        alt=""
+        @click="goToVault"
+      />
+      <span>
+        <h5 class="text-light vault-text">{{ vault.name }}</h5>
+      </span>
+    </div>
   </div>
 </template>
 
@@ -59,10 +66,6 @@ export default {
   width: 15em;
   height: 15em;
   box-shadow: 0.5em 0.5em 0.5em rgba(0, 0, 0, 0.345);
-}
-
-.v-box {
-  position: absolute;
 }
 
 .vault-text {

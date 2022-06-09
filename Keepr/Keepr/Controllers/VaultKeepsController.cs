@@ -58,7 +58,7 @@ public class VaultKeepsController : ControllerBase
    try
    {
     Account account = await HttpContext.GetUserInfoAsync<Account>();
-    _vaultKeepsServ.Delete(id, account.Id);
+    _vaultKeepsServ.Delete(id, account?.Id);
     return Ok(id);
    }
    catch (Exception e)

@@ -42,6 +42,9 @@ export default {
         await keepsService.getByVault(route.params.id);
       } catch (error) {
         Pop.toast("Something went wrong", error);
+        router.push({
+          name: "Home",
+        });
       }
     });
 

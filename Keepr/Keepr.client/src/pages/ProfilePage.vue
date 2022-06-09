@@ -15,7 +15,7 @@
           <div class="btn fs-1 p-0 text-danger" @click="openModal">+</div></span
         >
 
-        <div class="d-flex">
+        <div class="row d-flex">
           <Vault v-for="v in vaults.slice(0, 20)" :key="v.id" :vault="v" />
         </div>
       </div>
@@ -28,7 +28,7 @@
         >
 
         <div class="keep-container">
-          <Keep v-for="k in keeps.slice(0, 20)" :key="k.id" :keep="k" />
+          <Keep v-for="k in keeps" :key="k.id" :keep="k" />
         </div>
       </div>
     </div>
