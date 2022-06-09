@@ -6,39 +6,37 @@
     <template #body>
       <form @submit.prevent="create" id="KeepForm">
         <div class="form-group">
-          <label for="name">Title</label>
+          <label for="name">Title for Your Keep</label>
           <input
             type="name"
             class="form-control"
             id="inputTitle"
             aria-describedby="titleInput"
-            placeholder="Enter Vault Title..."
+            placeholder="Keep Title..."
             v-model="editable.name"
             required
           />
-          <small id="titleInput" class="form-text text-muted"
-            >Tip: Find your keeps easier with a good vault title</small
-          >
+          <small id="titleInput" class="form-text text-muted"></small>
         </div>
         <div class="form-group">
-          <label for="description">Description</label>
+          <label for="description">Description of your Keep</label>
           <input
             type="description"
             class="form-control"
             id="inputDescription"
             aria-describedby="inputDescription"
-            placeholder="Enter Vault Description..."
+            placeholder="Keep Description..."
             v-model="editable.description"
             required
           />
         </div>
         <div class="form-group">
-          <label for="img">Vault Cover</label>
+          <label for="img">Keep Url</label>
           <input
             type="img"
             class="form-control"
             id="imgInput"
-            placeholder="Cover Image Url..."
+            placeholder="Keep Url..."
             v-model="editable.img"
           />
         </div>

@@ -1,11 +1,9 @@
 <template>
-  <div class="">
-    <figure class="selectable">
-      <img class="" :src="vault.img" alt="" @click="goToVault" />
-      <figcaption class="">
-        <h1 class="text-light">{{ vault.name }}</h1>
-      </figcaption>
-    </figure>
+  <div class="m-2 vbox">
+    <img class="vault-box rounded" :src="vault.img" alt="" @click="goToVault" />
+    <span>
+      <h5 class="text-light vault-text">{{ vault.name }}</h5>
+    </span>
   </div>
 </template>
 
@@ -26,8 +24,16 @@ export default {
   setup(props) {
     return {
       vaults: computed(() => AppState.vaults),
+      account: computed(() => AppState.account),
 
       async goToVault() {
+        if (
+          props.vault.isPrivate &&
+          props.vault.creatorId != AppState.account.id
+        ) {
+          Pop.toast("You can't view that Vault!");
+          router.push({ name: "Home" });
+        }
         console.log(props.vault);
         AppState.focusVault = props.vault;
         router.push({ name: "Vault", params: { id: props.vault.id } });
@@ -47,5 +53,20 @@ export default {
   height: 0.1em;
   width: 80%;
   background-color: rgba(0, 0, 0, 0.488);
+}
+
+.vault-box {
+  width: 15em;
+  height: 15em;
+  box-shadow: 0.5em 0.5em 0.5em rgba(0, 0, 0, 0.345);
+}
+
+.v-box {
+  position: absolute;
+}
+
+.vault-text {
+  position: relative;
+  bottom: 1.5em;
 }
 </style>

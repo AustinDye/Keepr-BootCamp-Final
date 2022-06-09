@@ -20,30 +20,32 @@ a {
   margin: 0;
 }
 figure {
-  margin: 1em;
-  grid-template-rows: 1fr auto;
+  display: block;
+  grid-template-rows: auto;
   transition-duration: 1000ms;
-  background-color: transparent;
   border-radius: 1rem;
   animation: 3s ease-out 0s 1 slideInFromTop;
-  box-shadow: 0.5em 0.5em 0.5em rgba(0, 0, 0, 0.345);
-  border-radius: 1rem;
+
+  background-color: transparent;
 }
 
 figure > img {
+  grid-row: 1 / -1;
+  grid-column: 1;
   border-radius: 0.5rem;
   width: 100%;
   display: block;
+  box-shadow: 0.5em 0.5em 0.5em rgba(0, 0, 0, 0.345);
 }
 
 figcaption {
-  background-color: rgba(255, 255, 255, 0.5);
-  padding: 0.2em 0.5em;
+  background-color: transparent;
+  position: relative;
+  bottom: 3.5em;
   justify-self: start;
   background-color: rgba(0, 0, 0, 0.188);
-  border-radius: 1rem;
+  border-radius: 0.5em;
 }
-
 * {
   box-sizing: border-box;
 }

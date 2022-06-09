@@ -1,12 +1,11 @@
 <template>
-  <div class="d-flex justify-content-between">
-    <h1>1</h1>
-    <h6>1</h6>
-    <div class="btn btn-info">Delete</div>
+  <div>
+    <div class="btn btn-danger" @click="deleteVault">Delete Vault</div>
+    <div class="keep-container">
+      <Keep v-for="k in keeps.slice(0, 20)" :key="k.id" :keep="k" />
+    </div>
   </div>
-  <div class="keep-container">
-    <Keep v-for="k in keeps.slice(0, 20)" :key="k.id" :keep="k" />
-  </div>
+  <KeepModal />
 </template>
 
 <script>
@@ -16,7 +15,9 @@ import { AppState } from "../AppState";
 import Pop from "../utils/Pop";
 import { Modal } from "bootstrap";
 import { vaultsService } from "../services/VaultsService";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { vaultKeepsService } from "../services/VaultKeepsService";
+import { router } from "../router";
 
 export default {
   props: {
@@ -29,9 +30,12 @@ export default {
       type: Object,
     },
   },
+
   name: "Vault",
   setup() {
+    const router = useRouter();
     const route = useRoute();
+
     onMounted(async () => {
       try {
         await vaultsService.getById(route.params);
@@ -40,9 +44,27 @@ export default {
         Pop.toast("Something went wrong", error);
       }
     });
+
     return {
       keeps: computed(() => AppState.keeps),
       focusVault: computed(() => AppState.focusVault),
+
+      async deleteVault() {
+        try {
+          if (await Pop.confirm()) {
+            router.push({
+              name: "Profile",
+              params: { id: AppState.focusVault.creatorId },
+            });
+            await vaultsService.delete(AppState.focusVault);
+
+            Pop.toast("Keep Deleted", "success");
+          }
+        } catch (error) {
+          console.error("[error prefix]", error.message);
+          Pop.toast(error.message, "error");
+        }
+      },
     };
   },
 };

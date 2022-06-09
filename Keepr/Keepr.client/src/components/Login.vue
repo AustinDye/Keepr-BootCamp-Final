@@ -15,11 +15,11 @@
         aria-expanded="false"
         id="authDropdown"
       >
-        <div v-if="account.picture">
+        <div v-if="account.picture" class="rounded accountbar p-1 bg-grey">
           <img
             :src="account.picture"
             alt="account photo"
-            height="40"
+            height="50"
             class="rounded"
           />
           <span class="mx-3 text-success lighten-30">{{ account.name }}</span>
@@ -29,9 +29,11 @@
         class="dropdown-menu p-0 list-group w-100"
         aria-labelledby="authDropdown"
       >
-        <router-link :to="{ name: 'Account' }">
+        <router-link
+          :to="{ name: 'Profile', params: { id: account.creatorId } }"
+        >
           <div class="list-group-item list-group-item-action hoverable">
-            Manage Account
+            Profile
           </div>
         </router-link>
         <div
@@ -45,7 +47,6 @@
     </div>
   </span>
 </template>
-
 
 <script>
 import { computed } from "@vue/reactivity";
@@ -67,7 +68,6 @@ export default {
 };
 </script>
 
-
 <style lang="scss" scoped>
 .dropdown-menu {
   user-select: none;
@@ -80,5 +80,9 @@ export default {
 }
 .hoverable {
   cursor: pointer;
+}
+
+.accountbar {
+  box-shadow: 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.326);
 }
 </style>

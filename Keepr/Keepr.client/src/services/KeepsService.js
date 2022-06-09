@@ -18,12 +18,13 @@ class KeepsService {
   logger.log(AppState.keeps)
  }
 
- async getById(keep) {
+  async getById(keep) {
+    keep.views += 1
+    logger.log("wowie!",keep)
   const res = await api.get("/api/keeps/" + keep.id)
-  AppState.focusKeep = res.data
-  logger.log(AppState.focusKeep)
+  
  }
-
+  
  async delete(keep) {
   const res = await api.delete("/api/keeps/" + keep.id)
  }
@@ -38,7 +39,7 @@ class KeepsService {
   const res = await api.get("api/vaults/" + id + "/keeps")
   logger.log("Howdy", res.data)
   AppState.keeps = res.data
- }
+  }
 }
 
 export const keepsService = new KeepsService() 

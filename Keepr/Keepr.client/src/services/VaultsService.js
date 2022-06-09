@@ -22,7 +22,7 @@ class VaultsService {
 
  async getByProfile(creatorId) {
   const res = await api.get("api/profiles/" + creatorId + "/vaults")
-  logger.log(res.data)
+  logger.log("howdy",res.data)
   AppState.vaults = res.data
  }
 

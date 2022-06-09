@@ -1,15 +1,16 @@
 <template>
-  <div>
-    <figure class="">
-      <img class="" :src="keep.img" alt="" @click="getKeep" />
-      <figcaption class="">
-        <h1 class="text-light">{{ keep.name }}</h1>
-        <a @click="goToProfile"
-          ><img class="user-img rounded-circle" :src="keep.creator.picture"
-        /></a>
-      </figcaption>
-    </figure>
-  </div>
+  <figure>
+    <img class="img-fluid" :src="keep.img" alt="" @click="getKeep" />
+    <figcaption class="d-flex justify-content-between">
+      <h1 class="text-light">{{ keep.name }}</h1>
+
+      <img
+        @click="goToProfile"
+        class="user-img rounded-circle"
+        :src="keep.creator.picture"
+      />
+    </figcaption>
+  </figure>
 </template>
 
 <script>
@@ -20,6 +21,7 @@ import { Modal } from "bootstrap";
 import Pop from "../utils/Pop";
 import { router } from "../router";
 import { useRouter } from "vue-router";
+import { vaultsService } from "../services/VaultsService";
 export default {
   props: {
     keep: {
@@ -34,8 +36,10 @@ export default {
 
       async getKeep() {
         try {
+          await vaultsService.getByProfile(AppState.account.id);
+          console.log(props.keep);
           AppState.focusKeep = props.keep;
-          console.log(AppState.focusKeep);
+          //await keepsService.getById(AppState.focusKeep);
           Modal.getOrCreateInstance(
             document.getElementById("keepModal")
           ).toggle();
