@@ -22,7 +22,6 @@ class VaultKeepsService {
  }
 
   async delete(keep) {
-   debugger
   const res = await api.delete("/api/vaultkeeps/" + keep.vaultKeepId)
  }
 

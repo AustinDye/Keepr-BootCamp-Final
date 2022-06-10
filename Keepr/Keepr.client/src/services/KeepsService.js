@@ -6,7 +6,6 @@ import { api } from "./AxiosService"
 
 
 class KeepsService {
-
  async create(newKeep) {
   const res = await api.post("/api/keeps", newKeep)
   AppState.keeps.unshift(new Keep(res.data))
@@ -17,27 +16,22 @@ class KeepsService {
   AppState.keeps = res.data
   logger.log(AppState.keeps)
  }
-
   async getById(keep) {
   const res = await api.get("/api/keeps/" + keep.id)
   logger.log("getById", res.data)
  }
-  
  async delete(keep) {
   const res = await api.delete("/api/keeps/" + keep.id)
  }
-
  async getByProfile(id) {
   const res = await api.get("/api/profiles/" + id + "/keeps")
   logger.log(res.data)
   AppState.keeps = res.data
  }
-
   async getByVault(id) {
   const res = await api.get("api/vaults/" + id + "/keeps")
   logger.log("Howdy", res.data)
   AppState.keeps = res.data
   }
 }
-
 export const keepsService = new KeepsService() 

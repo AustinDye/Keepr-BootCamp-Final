@@ -9,7 +9,7 @@
       </div>
     </span>
     <div class="row d-block">
-      <div class="col-12">
+      <div class="col-md-12">
         <span class="d-flex"
           ><p class="fs-1">Vaults</p>
           <div class="btn fs-1 p-0 text-danger" @click="openModal">+</div></span
@@ -19,7 +19,7 @@
           <Vault v-for="v in vaults.slice(0, 20)" :key="v.id" :vault="v" />
         </div>
       </div>
-      <div class="col-12 mx-2">
+      <div class="col-md-12 mx-2">
         <span class="d-flex"
           ><p class="fs-1">Keeps</p>
           <div class="btn fs-1 p-0 text-danger" @click="openKeepModal">

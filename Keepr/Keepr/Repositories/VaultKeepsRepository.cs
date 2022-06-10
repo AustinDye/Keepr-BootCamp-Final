@@ -18,6 +18,12 @@ public class VaultKeepsRepository
   internal VaultKeep Create(VaultKeep newVaultKeep)
   {
      string sql = @"
+       UPDATE keeps k
+      SET
+      kept = kept + 1
+      WHERE k.id = @KeepId
+      ;
+
     INSERT INTO vaultKeeps
     (keepId, vaultId, creatorId)
     VALUES
@@ -59,7 +65,8 @@ public class VaultKeepsRepository
 
    internal void Delete(int id)
   {
-   string sql = "DELETE FROM vaultKeeps WHERE id = @id LIMIT 1";
+   string sql = @"
+   DELETE FROM vaultKeeps WHERE id = @id LIMIT 1";
       _db.Execute(sql, new { id });
   }
 

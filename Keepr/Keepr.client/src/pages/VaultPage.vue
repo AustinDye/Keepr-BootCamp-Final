@@ -55,13 +55,12 @@ export default {
       async deleteVault() {
         try {
           if (await Pop.confirm()) {
+            await vaultsService.delete(AppState.focusVault);
+            Pop.toast("Vault Deleted", "success");
             router.push({
               name: "Profile",
               params: { id: AppState.focusVault.creatorId },
             });
-            await vaultsService.delete(AppState.focusVault);
-
-            Pop.toast("Keep Deleted", "success");
           }
         } catch (error) {
           console.error("[error prefix]", error.message);
