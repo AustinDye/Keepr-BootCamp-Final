@@ -24,72 +24,69 @@
               <p>{{ focusKeep.description }}</p>
               <div class="line"></div>
             </div>
-            <div class="col-12 d-flex infostuff justify-content-between">
-              <div>
-                <div class="dropdown">
-                  <a
-                    class="btn btn-secondary dropdown-toggle"
-                    href="#"
-                    role="button"
-                    id="dropdownMenuLink"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
+            <div class="col-12">
+              <div class="row infostuff">
+                <div class="col-3 pt-2 d-flex justify-content-center">
+                  <button
+                    v-if="focusVault.creatorId == account.id && focusVault"
+                    class="btn btn-danger"
+                    @click="deleteVk"
                   >
-                    Add to Vault
-                  </a>
-
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <p v-for="v in vaults" :key="v.id" :vault="v" :value="v.id">
-                      <a class="dropdown-item" @click="createVk(v)">
-                        {{ v.name }}</a
-                      >
-                    </p>
-                  </ul>
-                </div>
-                <!-- <form @submit.prevent="createVk()">
-                  <select
-                    class="form-control"
-                    aria-label="select vault"
-                    v-model="editable.vaultId"
-                  >
-                    <option selected>Add to a Keep</option>
-                    <option
-                      v-for="v in vaults"
-                      :key="v.id"
-                      :vault="v"
-                      :value="v.id"
+                    Remove
+                  </button>
+                  <div class="dropdown" v-else>
+                    <a
+                      class="btn btn-secondary dropdown-toggle"
+                      href="#"
+                      role="button"
+                      id="dropdownMenuLink"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
                     >
-                      <p type="submit">{{ v.name }}</p>
-                    </option>
-                  </select>
-                  <button class="btn btn-info">Submit</button>
-                </form>-->
-              </div>
+                      Add to Vault
+                    </a>
 
-              <button
-                v-if="focusVault.creatorId == account.id"
-                class="btn btn-danger w-50 mt-3"
-                @click="deleteVk"
-              >
-                Remove From Vault
-              </button>
-              <i
-                class="mdi mdi-trash-can fs-1"
-                @click="deleteKeep"
-                v-if="focusKeep.creatorId == focusKeep.creator.id"
-              ></i>
-              <div
-                v-if="focusKeep.creator.id"
-                class="rounded accountbar d-flex selectable"
-              >
-                <img
-                  @click="goToProfile(focusKeep.creatorId)"
-                  class="user-img rounded"
-                  :src="focusKeep.creator.picture"
-                />
-                <p class="mx-3 lighten-30 my-1">
-                  {{ focusKeep.creator.name }}
-                </p>
+                    <ul
+                      class="dropdown-menu"
+                      aria-labelledby="dropdownMenuLink"
+                    >
+                      <p
+                        v-for="v in vaults"
+                        :key="v.id"
+                        :vault="v"
+                        :value="v.id"
+                      >
+                        <a class="dropdown-item" @click="createVk(v)">
+                          {{ v.name }}</a
+                        >
+                      </p>
+                    </ul>
+                  </div>
+                </div>
+                <div
+                  class="col-3 d-flex justify-content-center"
+                  v-if="focusKeep.creatorId == account.id"
+                >
+                  <i class="mdi mdi-trash-can fs-1" @click="deleteKeep"></i>
+                </div>
+                <div class="col-6 pt-1 ps-4">
+                  <div
+                    v-if="focusKeep.creator.id"
+                    class="rounded d-flex selectable"
+                  >
+                    <div class="rounded accountbar p-1">
+                      <img
+                        :src="focusKeep.creator.picture"
+                        alt="account photo"
+                        height="40"
+                        class="rounded"
+                      />
+                      <span class="mx-3 text- lighten-30">{{
+                        focusKeep.creator.name
+                      }}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -182,21 +179,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.user-img {
-  width: 2em;
-  height: 2em;
-}
-
 .line {
   height: 0.1em;
   width: 80%;
   background-color: rgba(0, 0, 0, 0.488);
 }
 
-.infostuff {
-  margin-top: 60%;
-}
 .fs-2 {
   color: #55efc4;
+}
+
+.infostuff {
+  margin-top: 30%;
 }
 </style>
