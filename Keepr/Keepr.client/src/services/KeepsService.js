@@ -19,10 +19,8 @@ class KeepsService {
  }
 
   async getById(keep) {
-    keep.views += 1
-    logger.log("wowie!",keep)
   const res = await api.get("/api/keeps/" + keep.id)
-  
+  logger.log("getById", res.data)
  }
   
  async delete(keep) {

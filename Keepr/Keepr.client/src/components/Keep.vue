@@ -1,7 +1,7 @@
 <template>
   <figure>
     <img class="img-fluid" :src="keep.img" alt="" @click="getKeep" />
-    <figcaption class="d-flex justify-content-between p-2">
+    <figcaption class="d-flex justify-content-between">
       <h1 class="text-light">{{ keep.name }}</h1>
 
       <img
@@ -36,21 +36,18 @@ export default {
 
       async getKeep() {
         try {
+          AppState.focusKeep = props.keep;
           AppState.focusKeep.views++;
-          console.log("View This!", AppState.focusKeep);
-          await keepsService.getById();
-          await vaultsService.getByProfile(AppState.account.id);
-          console.log(props.keep);
-          //await keepsService.getById(AppState.focusKeep);
+          await keepsService.getById(AppState.focusKeep);
           Modal.getOrCreateInstance(
             document.getElementById("keepModal")
           ).toggle();
+          await vaultsService.getByProfile(AppState.account.id);
         } catch {
           Pop.toast("You cant view that keep!");
         }
       },
       async goToProfile() {
-        console.log(props.keep);
         router.push({ name: "Profile", params: { id: props.keep.creatorId } });
       },
     };

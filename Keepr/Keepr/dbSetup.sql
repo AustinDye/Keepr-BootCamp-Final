@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS keeps(
   name VARCHAR(255) COMMENT 'User Name',
   description VARCHAR(255) COMMENT 'Description',
   img VARCHAR(255) COMMENT 'imgUrl',
-  views INT ,
+  views INT DEFAULT 0,
 
   FOREIGN KEY (creatorId)
     REFERENCES accounts(id)
