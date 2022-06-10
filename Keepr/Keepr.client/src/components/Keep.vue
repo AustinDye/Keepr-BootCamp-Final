@@ -2,7 +2,7 @@
   <figure>
     <img class="img-fluid" :src="keep.img" alt="" @click="getKeep" />
     <figcaption class="d-flex justify-content-between">
-      <h1 class="text-light">{{ keep.name }}</h1>
+      <h1 class="text-light ps-2">{{ keep.name }}</h1>
 
       <img
         @click="goToProfile"
@@ -57,13 +57,14 @@ export default {
 
 <style lang="scss" scoped>
 .user-img {
-  width: 2em;
-  height: 2em;
+  width: 3em;
+  height: 3em;
+  margin: 1%;
 }
 
 .line {
   height: 0.1em;
   width: 80%;
-  background-color: rgba(0, 0, 0, 0.488);
+  background-color: rgba(0, 0, 0, 0.743);
 }
 </style>

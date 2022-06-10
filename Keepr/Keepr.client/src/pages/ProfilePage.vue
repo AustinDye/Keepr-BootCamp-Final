@@ -3,9 +3,9 @@
     <span class="d-flex">
       <img class="m-3" :src="profile.picture" />
       <div>
-        <h1>{{ keeps.length }}</h1>
-        <h1>{{ vaults.length }}</h1>
-        <h5>3</h5>
+        <h1>{{ profile.name }}</h1>
+        <h3>Keeps: {{ keeps.length }}</h3>
+        <h3>Vaults: {{ vaults.length }}</h3>
       </div>
     </span>
     <div class="row d-block">

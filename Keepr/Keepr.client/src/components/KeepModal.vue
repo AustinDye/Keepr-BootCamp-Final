@@ -76,6 +76,7 @@
                   >
                     <div class="rounded accountbar p-1">
                       <img
+                        @click="goToProfile"
                         :src="focusKeep.creator.picture"
                         alt="account photo"
                         height="40"
@@ -164,10 +165,10 @@ export default {
           Pop.toast(error.message, "error");
         }
       },
-      goToProfile(creatorId) {
+      goToProfile() {
         router.push({
           name: "Profile",
-          params: { id: creatorId },
+          params: { id: AppState.focusKeep.creatorId },
         });
         Modal.getOrCreateInstance(
           document.getElementById("keepModal")

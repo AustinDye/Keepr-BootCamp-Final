@@ -10,6 +10,7 @@
 
     <div class="dropdown my-2 my-lg-0" v-else>
       <div
+        @click="goToProfile"
         class="dropdown-toggle selectable"
         data-bs-toggle="dropdown"
         aria-expanded="false"
@@ -52,8 +53,11 @@
 import { computed } from "@vue/reactivity";
 import { AppState } from "../AppState";
 import { AuthService } from "../services/AuthService";
+import { router } from "../router";
+import { useRouter } from "vue-router";
 export default {
   setup() {
+    const router = useRouter();
     return {
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
@@ -62,6 +66,12 @@ export default {
       },
       async logout() {
         AuthService.logout({ returnTo: window.location.origin });
+      },
+      goToProfile() {
+        router.push({
+          name: "Profile",
+          params: { id: AppState.account.id },
+        });
       },
     };
   },

@@ -7,8 +7,8 @@
         alt=""
         @click="goToVault"
       />
-      <span>
-        <h5 class="text-light vault-text">{{ vault.name }}</h5>
+      <span class="nameVault">
+        <h5 class="text-light vault-text ps-2 fs-4">{{ vault.name }}</h5>
       </span>
     </div>
   </div>
@@ -71,5 +71,8 @@ export default {
 .vault-text {
   position: relative;
   bottom: 1.5em;
+  background-color: rgba(0, 0, 0, 0.315);
+  width: 65%;
+  border-radius: 0.2em;
 }
 </style>
